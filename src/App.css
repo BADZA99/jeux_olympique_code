@@ -20,7 +20,7 @@ font-family: "Helvetica", sans-serif;
   background-repeat: no-repeat;
   /* background: #000; */
   /* with height */
-    height: 100vh;
+    height: 104dvh;
 
 }
 
@@ -63,51 +63,49 @@ font-family: "Helvetica", sans-serif;
     height: 60%;
 } */
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .ring {
     width: 25vw;
     height: 25vw;
-    border-width: 4px;
   }
   .ring:nth-child(2) {
-    top: 10vw ;
-    left: 15vw ;
+    top: 10vw;
+    left: 15vw;
   }
   .ring:nth-child(3) {
-    top: 0 ;
-    left: 30vw ;
+    top: 0;
+    left: 30vw;
   }
   .ring:nth-child(4) {
-    top: 10vw ;
-    left: 45vw ;
+    top: 10vw;
+    left: 45vw;
   }
   .ring:nth-child(5) {
-    top: 0 ;
-    left: 60vw ;
+    top: 0;
+    left: 60vw;
   }
 }
 
-@media (min-width: 601px) and (max-width: 1024px) {
+@media (min-width: 641px) and (max-width: 1024px) {
   .ring {
     width: 15vw;
     height: 15vw;
-    border-width: 4px;
   }
   .ring:nth-child(2) {
-    top: 7vw ;
-    left: 12vw ;
+    top: 7vw;
+    left: 12vw;
   }
   .ring:nth-child(3) {
-    top: 0 ;
-    left: 24vw ;
+    top: 0;
+    left: 24vw;
   }
   .ring:nth-child(4) {
-    top: 7vw ;
-    left: 36vw ;
+    top: 7vw;
+    left: 36vw;
   }
   .ring:nth-child(5) {
-    top: 0 ;
-    left: 48vw ;
+    top: 0;
+    left: 48vw;
   }
 }
 
@@ -115,23 +113,22 @@ font-family: "Helvetica", sans-serif;
   .ring {
     width: 10vw;
     height: 10vw;
-    border-width: 4px;
   }
   .ring:nth-child(2) {
-    top: 5vw ;
-    left: 10vw ;
+    top: 5vw;
+    left: 10vw;
   }
   .ring:nth-child(3) {
-    top: 0 ;
-    left: 20vw ;
+    top: 0;
+    left: 20vw;
   }
   .ring:nth-child(4) {
-    top: 5vw ;
-    left: 30vw ;
+    top: 5vw;
+    left: 30vw;
   }
   .ring:nth-child(5) {
-    top: 0 ;
-    left: 40vw ;
+    top: 0;
+    left: 40vw;
   }
 }
 

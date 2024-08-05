@@ -271,10 +271,10 @@ const handleMouseLeave = (index) => {
             </div>
           </div>
           {/* rings div */}
-          <div className="relative left-auto  w-3/4 max-w-4xl aspect-square mt-10 mx-auto  ">
+          <div className="relative left-10 w-[80%] max-w-4xl aspect-square mt-10 mx-auto ">
             {/* Blue ring */}
             <div
-              className="ring absolute w-1/4 h-1/4 border-blue-600 rounded-full top-0 left-4 z-10 ring-0"
+              className="ring ring-0 absolute w-1/4 h-1/4 border-blue-600 rounded-full top-0 left-4 z-10"
               style={{
                 borderWidth: `${
                   (medalsByContinent?.EUR?.gold +
@@ -286,8 +286,9 @@ const handleMouseLeave = (index) => {
               ref={(el) => (ringRefs.current[0] = el)}
             ></div>
             {/* Yellow ring */}
+            {/* j'ai ajoute ring-0 pour enlever la bordure bleu par defaut et garder le style ring */}
             <div
-              className="ring absolute w-1/4 h-1/4 border-yellow-400 rounded-full top-12 left-14 z-20 ring-0"
+              className="ring ring-0 absolute w-1/4 h-1/4 border-yellow-400 rounded-full top-12 left-14 z-20"
               style={{
                 borderWidth: `${
                   (medalsByContinent?.ASI?.gold +
@@ -300,7 +301,7 @@ const handleMouseLeave = (index) => {
             ></div>
             {/* Black ring */}
             <div
-              className="ring absolute w-1/4 h-1/4 border-gray-950 rounded-full top-0 left-24 z-30 ring-0"
+              className="ring ring-0 absolute w-1/4 h-1/4 border-gray-950 rounded-full top-0 left-24 z-30"
               style={{
                 borderWidth: `${
                   (medalsByContinent?.AFR?.gold +
@@ -313,7 +314,7 @@ const handleMouseLeave = (index) => {
             ></div>
             {/* Green ring */}
             <div
-              className="ring absolute w-1/4 h-1/4 border-green-500 rounded-full top-7 left-36 z-40 ring-0"
+              className="ring ring-0 absolute w-1/4 h-1/4 border-green-500 rounded-full top-7 left-36 z-40"
               style={{
                 borderWidth: `${
                   (medalsByContinent?.OCE?.gold +
@@ -326,7 +327,7 @@ const handleMouseLeave = (index) => {
             ></div>
             {/* Red ring */}
             <div
-              className="ring absolute w-1/4 h-1/4 border-red-600 rounded-full top-0 left-44 z-50  ring-0"
+              className="ring ring-0 absolute w-1/4 h-1/4 border-red-600 rounded-full top-0 left-44 z-50"
               style={{
                 borderWidth: `${
                   (medalsByContinent?.AME?.gold +
@@ -338,7 +339,7 @@ const handleMouseLeave = (index) => {
               ref={(el) => (ringRefs.current[4] = el)}
             ></div>
             {/* stats2 */}
-            <div className=" absolute top-[36%] left-48 flex justify-between  w-[50%] stats2 z-50 ">
+            <div className="absolute top-[36%] right-[25%] left-[18%] flex justify-between w-[50%] stats2 z-50 ">
               {/* Asia */}
               <div className="text-center">
                 <p
