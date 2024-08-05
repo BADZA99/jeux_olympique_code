@@ -2,7 +2,7 @@
 
 Ce projet est une application web pour visualiser les médailles olympiques par continent pour les Jeux Olympiques de Paris 2024. L'application utilise React pour le front-end, Tailwind CSS pour le style, et Vite pour le bundling et le développement.
 
-![Visualisation des Médailles](./assets/demo.png)
+![Visualisation des Médailles](./src/assets/demo.png)
 
 ## Lancer le Projet
 
@@ -61,6 +61,10 @@ Cette application utilise l'API publique de [Codante](https://apis.codante.io) p
 
 - **Responsive Design** : J'ai rencontré des difficultés pour rendre l'application entièrement responsive. Des ajustements supplémentaires peuvent être nécessaires pour une meilleure compatibilité avec tous les appareils.
 - Cela m'a pris environ 4 heures pour le faire.
+
+## Lien du Projet
+
+Vous pouvez accéder au projet en ligne à l'adresse suivante : [JO 2024 Visualisation](https://jo2024visualisation.netlify.app/)
 
 ### Configuration et Outils
 
