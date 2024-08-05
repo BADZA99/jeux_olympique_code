@@ -190,7 +190,7 @@ const handleMouseLeave = (index) => {
             Olympics medals per continent in PARIS 2024
           </h1>
           {/* stats */}
-          <div className="flex justify-between mt-12 w-[62%] mr-16 stats z-50 ">
+          <div className="flex justify-between mt-12 w-[60%] mx-auto stats z-50 ">
             {/* EUROPE */}
             <div className="text-center">
               <p
@@ -339,7 +339,7 @@ const handleMouseLeave = (index) => {
               ref={(el) => (ringRefs.current[4] = el)}
             ></div>
             {/* stats2 */}
-            <div className="absolute top-[36%] right-[25%] left-[18%] flex justify-between w-[50%] stats2 z-50 ">
+            <div className="absolute top-[36%] right-[25%] left-[20%] flex justify-between w-[50%] stats2 z-50 ">
               {/* Asia */}
               <div className="text-center">
                 <p
