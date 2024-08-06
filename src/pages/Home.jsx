@@ -5,12 +5,14 @@ import { fetcher } from '@/utils/fetcher';
 import { useEffect, useRef, useState } from 'react';
 import CountUp from 'react-countup';
 import { gsap } from "gsap";
-import { ClipLoader } from 'react-spinners';
+import { RingLoader
+ } from 'react-spinners';
+ import logoJo from '../assets/logojo.png'
 
 export default function Home() {
   const [medalsByContinent, setMedalsByContinent] = useState({});
   const [topCountriesByContinent, setTopCountriesByContinent] = useState({});
-  const [color, setColor] = useState("#111111");
+  const [color] = useState("#1693a3");
   const { data, error, isLoading } = useSWR(
       "https://apis.codante.io/olympic-games/countries",
       fetcher
@@ -69,14 +71,24 @@ export default function Home() {
 
 const handleMouseEnter = (index) => {
   if (ringRefs.current[index]) {
-    ringRefs.current[index].classList.add("pulse-animation");
+    ringRefs.current[index].classList.add("bounce-animation");
   }
+  ringRefs.current.forEach((ring, i) => {
+    if (i !== index && ring) {
+      ring.classList.add("dimmed");
+    }
+  });
 };
 
 const handleMouseLeave = (index) => {
   if (ringRefs.current[index]) {
-    ringRefs.current[index].classList.remove("pulse-animation");
+    ringRefs.current[index].classList.remove("bounce-animation");
   }
+  ringRefs.current.forEach((ring) => {
+    if (ring) {
+      ring.classList.remove("dimmed");
+    }
+  });
 };
 
 
@@ -97,11 +109,13 @@ const handleMouseLeave = (index) => {
       setMedalsByContinent({});
       setTopCountriesByContinent({});
     }
+  
 
     const rings = document.querySelectorAll(".ring");
     const headtext = document.querySelector(".headtext");
     const stats = document.querySelectorAll(".stats");
     const stats2 = document.querySelectorAll(".stats2");
+    const logojo = document.querySelector(".logojo");
 
     // Animation for rings
     gsap.from(rings, {
@@ -115,7 +129,7 @@ const handleMouseLeave = (index) => {
       duration: 1,
       stagger: 0.3,
       ease: "back.inOut(1.2)",
-      delay: 1, 
+      delay: 1,
     });
 
     // Animation for headtext
@@ -123,13 +137,13 @@ const handleMouseLeave = (index) => {
       y: 20,
       opacity: 0,
       duration: 0.5,
-      delay: 2.6, 
+      delay: 2.6,
     });
     gsap.to(headtext, {
       y: 0,
       opacity: 1,
       duration: 0.5,
-      delay: 3.1, 
+      delay: 3.1,
     });
 
     // Animation for stats
@@ -138,14 +152,14 @@ const handleMouseLeave = (index) => {
       opacity: 0,
       duration: 0.4,
       stagger: 0.15,
-      delay: 3.8, 
+      delay: 3.8,
     });
     gsap.to(stats, {
       y: 0,
       opacity: 1,
-      duration: 0.4,
+      duration: 0.9,
       stagger: 0.15,
-      delay: 4.3, 
+      delay: 4.3,
     });
 
     // Animation for stats2
@@ -154,14 +168,29 @@ const handleMouseLeave = (index) => {
       opacity: 0,
       duration: 0.4,
       stagger: 0.15,
-      delay: 4.8, // Adjust delay to start after stats animations
+      delay: 4.8, 
     });
     gsap.to(stats2, {
       y: 0,
       opacity: 1,
       duration: 0.4,
       stagger: 0.15,
-      delay: 5.3, 
+      delay: 5.3,
+    });
+
+    // logojo
+
+    gsap.from(logojo, {
+      x: -10,
+      opacity: 0,
+      duration: 0.5,
+      delay: 6,
+    });
+    gsap.to(logojo, {
+      x: 0,
+      opacity: 1,
+      duration: 0.5,
+      delay: 7,
     });
   }, [data]);
 
@@ -169,245 +198,305 @@ const handleMouseLeave = (index) => {
     // console.log(medalsByContinent);
     // console.log(topCountriesByContinent);
   return (
-    <div className="containerR min-h-screen ">
-      {isLoading && (
-        <ClipLoader
-          color={color}
-          loading={isLoading}
-          size={150}
-          aria-label="Loading data"
-          data-testid="loader"
-        />
-      )}
-      {error && (
-        <div className="text-center text-2xl font-bold mt-10">
-          An error occurred
-        </div>
-      )}
-      {!isLoading && !error && (
-        <div className="flex flex-col justify-center items-center  w-[80%] mx-auto bgImage">
-          <h1 className="text-3xl font-bold cursor-pointer text-center mt-10 headtext">
-            Olympics medals per continent in PARIS 2024
-          </h1>
-          {/* stats */}
-          <div className="flex justify-between mt-12 w-[60%] mx-auto stats z-50 ">
-            {/* EUROPE */}
-            <div className="text-center">
-              <p
-                className="text-blue-700 text-xl font-bold cursor-pointer"
-                onMouseEnter={() => handleMouseEnter(0)}
-                onMouseLeave={() => handleMouseLeave(0)}
-              >
-                Europe:{" "}
-                <CustomHoverCard
-                  triggerText={
-                    medalsByContinent?.EUR?.gold +
-                    medalsByContinent?.EUR?.silver +
-                    medalsByContinent?.EUR?.bronze
-                  }
-                  countries={topCountriesByContinent?.EUR}
-                />{" "}
-              </p>
-              <p>
-                <span className="text-yellow-500">🥇</span>
-                <CountUp end={medalsByContinent?.EUR?.gold} duration={2.75} />
-                <span className="text-gray-500">🥈</span>{" "}
-                <CountUp end={medalsByContinent?.EUR?.silver} duration={2.75} />{" "}
-                <span className="text-yellow-900">🥉</span>{" "}
-                <CountUp end={medalsByContinent?.EUR?.bronze} duration={2.75} />
-              </p>
-            </div>
-            {/* AFRICA */}
-            <div className="text-center">
-              <p
-                className="text-gray-700 text-xl font-bold cursor-pointer"
-                onMouseEnter={() => handleMouseEnter(2)}
-                onMouseLeave={() => handleMouseLeave(2)}
-              >
-                Africa:{" "}
-                <CustomHoverCard
-                  triggerText={
-                    medalsByContinent?.AFR?.gold +
-                    medalsByContinent?.AFR?.silver +
-                    medalsByContinent?.AFR?.bronze
-                  }
-                  countries={topCountriesByContinent?.AFR}
-                />
-              </p>
-              <p>
-                <span className="text-yellow-500">🥇</span>{" "}
-                <CountUp end={medalsByContinent?.AFR?.gold} duration={2.75} />{" "}
-                <span className="text-gray-500">🥈</span>{" "}
-                <CountUp end={medalsByContinent?.AFR?.silver} duration={2.75} />{" "}
-                <span className="text-yellow-900">🥉</span>{" "}
-                <CountUp end={medalsByContinent?.AFR?.bronze} duration={2.75} />{" "}
-              </p>
-            </div>
-            {/* AMERICA */}
-            <div className="text-center">
-              <p
-                className="text-red-700 text-xl font-bold cursor-pointer"
-                onMouseEnter={() => handleMouseEnter(4)}
-                onMouseLeave={() => handleMouseLeave(4)}
-              >
-                America:{" "}
-                <CustomHoverCard
-                  triggerText={
-                    medalsByContinent?.AME?.gold +
-                    medalsByContinent?.AME?.silver +
-                    medalsByContinent?.AME?.bronze
-                  }
-                  countries={topCountriesByContinent?.AME}
-                />
-              </p>
-              <p>
-                <span className="text-yellow-500">🥇</span>{" "}
-                <CountUp end={medalsByContinent?.AME?.gold} duration={2.75} />{" "}
-                <span className="text-gray-500">🥈</span>{" "}
-                <CountUp end={medalsByContinent?.AME?.silver} duration={2.75} />{" "}
-                <span className="text-yellow-900">🥉</span>{" "}
-                <CountUp end={medalsByContinent?.AME?.bronze} duration={2.75} />{" "}
-              </p>
-            </div>
+    <div className=" relative containerR min-h-screen ">
+      <div className="flex flex-col justify-center items-center  w-[90%] h-[80%] mx-auto bgImage">
+        {isLoading && (
+          <RingLoader
+            color={color}
+            loading={isLoading}
+            size={150}
+            aria-label="Loading data"
+            data-testid="loader"
+            // centre le au milieu de la page
+            className="flex justify-center items-center h-16"
+          />
+        )}
+        {error && (
+          <div className="text-center text-2xl font-bold mt-10">
+            An error occurred
           </div>
-          {/* rings div */}
-          <div className="relative left-10 w-[80%] max-w-4xl aspect-square mt-10 mx-auto ">
-            {/* Blue ring */}
-            <div
-              className="ring ring-0 absolute w-1/4 h-1/4 border-blue-600 rounded-full top-0 left-4 z-10"
-              style={{
-                borderWidth: `${
-                  (medalsByContinent?.EUR?.gold +
-                    medalsByContinent?.EUR?.silver +
-                    medalsByContinent?.EUR?.bronze) /
-                  7
-                }px`,
-              }}
-              ref={(el) => (ringRefs.current[0] = el)}
-            ></div>
-            {/* Yellow ring */}
-            {/* j'ai ajoute ring-0 pour enlever la bordure bleu par defaut et garder le style ring */}
-            <div
-              className="ring ring-0 absolute w-1/4 h-1/4 border-yellow-400 rounded-full top-12 left-14 z-20"
-              style={{
-                borderWidth: `${
-                  (medalsByContinent?.ASI?.gold +
-                    medalsByContinent?.ASI?.silver +
-                    medalsByContinent?.ASI?.bronze) /
-                  7
-                }px`,
-              }}
-              ref={(el) => (ringRefs.current[1] = el)}
-            ></div>
-            {/* Black ring */}
-            <div
-              className="ring ring-0 absolute w-1/4 h-1/4 border-gray-950 rounded-full top-0 left-24 z-30"
-              style={{
-                borderWidth: `${
-                  (medalsByContinent?.AFR?.gold +
-                    medalsByContinent?.AFR?.silver +
-                    medalsByContinent?.AFR?.bronze) /
-                  3
-                }px`,
-              }}
-              ref={(el) => (ringRefs.current[2] = el)}
-            ></div>
-            {/* Green ring */}
-            <div
-              className="ring ring-0 absolute w-1/4 h-1/4 border-green-500 rounded-full top-7 left-36 z-40"
-              style={{
-                borderWidth: `${
-                  (medalsByContinent?.OCE?.gold +
-                    medalsByContinent?.OCE?.silver +
-                    medalsByContinent?.OCE?.bronze) /
-                  7
-                }px`,
-              }}
-              ref={(el) => (ringRefs.current[3] = el)}
-            ></div>
-            {/* Red ring */}
-            <div
-              className="ring ring-0 absolute w-1/4 h-1/4 border-red-600 rounded-full top-0 left-44 z-50"
-              style={{
-                borderWidth: `${
-                  (medalsByContinent?.AME?.gold +
-                    medalsByContinent?.AME?.silver +
-                    medalsByContinent?.AME?.bronze) /
-                  7
-                }px`,
-              }}
-              ref={(el) => (ringRefs.current[4] = el)}
-            ></div>
-            {/* stats2 */}
-            <div className="absolute top-[36%] right-[25%] left-[20%] flex justify-between w-[50%] stats2 z-50 ">
-              {/* Asia */}
+        )}
+        {/* image logo */}
+        <div className="absolute top-4 left-2 h-20 logojo">
+          <img
+            src={logoJo}
+            alt="Olympic Games logo"
+            className="w-full h-full "
+          />
+        </div>
+        {/* team senegal et dedicace */}
+        <div className="absolute top-[55%] right-2 h-6 cursor-pointer  ">
+          <a
+            href="https://papabndev.netlify.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-black text-lg  font-thin"
+          >
+            Team Senegal
+          </a>
+          <span
+            role="img"
+            aria-label="running emoji"
+            className="text-sm font-bold
+            "
+          >
+            🏃🏾
+          </span>
+        </div>
+
+        {!isLoading && !error && (
+          <>
+            <h1 className="text-3xl font-bold cursor-pointer text-center mt-10 headtext ">
+              Olympics medals per continent in PARIS 2024
+            </h1>
+            {/* stats */}
+            <div className="flex justify-between mt-12 w-[60%] mx-auto stats z-50 ">
+              {/* EUROPE */}
               <div className="text-center">
                 <p
-                  className="text-yellow-700 text-xl font-bold cursor-pointer"
-                  onMouseEnter={() => handleMouseEnter(1)}
-                  onMouseLeave={() => handleMouseLeave(1)}
+                  className="text-blue-700 text-xl font-bold cursor-pointer "
+                  onMouseEnter={() => handleMouseEnter(0)}
+                  onMouseLeave={() => handleMouseLeave(0)}
                 >
-                  Asia:{" "}
+                  Europe:{" "}
                   <CustomHoverCard
                     triggerText={
-                      medalsByContinent?.ASI?.gold +
+                      medalsByContinent?.EUR?.gold +
+                      medalsByContinent?.EUR?.silver +
+                      medalsByContinent?.EUR?.bronze
+                    }
+                    countries={topCountriesByContinent?.EUR}
+                  />{" "}
+                </p>
+                <p>
+                  <span className="text-yellow-500">🥇</span>
+                  <CountUp
+                    start={0}
+                    end={medalsByContinent?.EUR?.gold}
+                    duration={5.75}
+                  />
+                  <span className="text-gray-500">🥈</span>{" "}
+                  <CountUp
+                    end={medalsByContinent?.EUR?.silver}
+                    duration={2.75}
+                  />{" "}
+                  <span className="text-yellow-900">🥉</span>{" "}
+                  <CountUp
+                    end={medalsByContinent?.EUR?.bronze}
+                    duration={2.75}
+                  />
+                </p>
+              </div>
+              {/* AFRICA */}
+              <div className="text-center">
+                <p
+                  className="text-gray-700 text-xl font-bold cursor-pointer "
+                  onMouseEnter={() => handleMouseEnter(2)}
+                  onMouseLeave={() => handleMouseLeave(2)}
+                >
+                  Africa:{" "}
+                  <CustomHoverCard
+                    triggerText={
+                      medalsByContinent?.AFR?.gold +
+                      medalsByContinent?.AFR?.silver +
+                      medalsByContinent?.AFR?.bronze
+                    }
+                    countries={topCountriesByContinent?.AFR}
+                  />
+                </p>
+                <p>
+                  <span className="text-yellow-500">🥇</span>{" "}
+                  <CountUp end={medalsByContinent?.AFR?.gold} duration={2.75} />{" "}
+                  <span className="text-gray-500">🥈</span>{" "}
+                  <CountUp
+                    end={medalsByContinent?.AFR?.silver}
+                    duration={2.75}
+                  />{" "}
+                  <span className="text-yellow-900">🥉</span>{" "}
+                  <CountUp
+                    end={medalsByContinent?.AFR?.bronze}
+                    duration={2.75}
+                  />{" "}
+                </p>
+              </div>
+              {/* AMERICA */}
+              <div className="text-center">
+                <p
+                  className="text-red-700 text-xl font-bold cursor-pointer "
+                  onMouseEnter={() => handleMouseEnter(4)}
+                  onMouseLeave={() => handleMouseLeave(4)}
+                >
+                  America:{" "}
+                  <CustomHoverCard
+                    triggerText={
+                      medalsByContinent?.AME?.gold +
+                      medalsByContinent?.AME?.silver +
+                      medalsByContinent?.AME?.bronze
+                    }
+                    countries={topCountriesByContinent?.AME}
+                  />
+                </p>
+                <p>
+                  <span className="text-yellow-500">🥇</span>{" "}
+                  <CountUp end={medalsByContinent?.AME?.gold} duration={2.75} />{" "}
+                  <span className="text-gray-500">🥈</span>{" "}
+                  <CountUp
+                    end={medalsByContinent?.AME?.silver}
+                    duration={2.75}
+                  />{" "}
+                  <span className="text-yellow-900">🥉</span>{" "}
+                  <CountUp
+                    end={medalsByContinent?.AME?.bronze}
+                    duration={2.75}
+                  />{" "}
+                </p>
+              </div>
+            </div>
+            {/* rings div */}
+            <div className="relative left-10 w-[80%] max-w-4xl aspect-square mt-10 mx-auto ">
+              {/* Blue ring */}
+              <div
+                className="ring ring-0 absolute w-1/4 h-1/4 border-blue-600 rounded-full top-0 left-4 z-10"
+                style={{
+                  borderWidth: `${
+                    (medalsByContinent?.EUR?.gold +
+                      medalsByContinent?.EUR?.silver +
+                      medalsByContinent?.EUR?.bronze) /
+                    7
+                  }px`,
+                }}
+                ref={(el) => (ringRefs.current[0] = el)}
+              ></div>
+              {/* Yellow ring */}
+              {/* j'ai ajoute ring-0 pour enlever la bordure bleu par defaut et garder le style ring */}
+              <div
+                className="ring ring-0 absolute w-1/4 h-1/4 border-yellow-400 rounded-full top-12 left-14 z-20"
+                style={{
+                  borderWidth: `${
+                    (medalsByContinent?.ASI?.gold +
                       medalsByContinent?.ASI?.silver +
-                      medalsByContinent?.ASI?.bronze
-                    }
-                    countries={topCountriesByContinent?.ASI}
-                  />
-                </p>
-                <p>
-                  <span className="text-yellow-500">🥇</span>{" "}
-                  <CountUp end={medalsByContinent?.ASI?.gold} duration={2.75} />{" "}
-                  <span className="text-gray-500">🥈</span>{" "}
-                  <CountUp
-                    end={medalsByContinent?.ASI?.silver}
-                    duration={2.75}
-                  />{" "}
-                  <span className="text-yellow-900">🥉</span>{" "}
-                  <CountUp
-                    end={medalsByContinent?.ASI?.bronze}
-                    duration={2.75}
-                  />{" "}
-                </p>
-              </div>
-              {/* Oceania */}
-              <div className="text-center">
-                <p
-                  className="text-green-700 text-xl font-bold cursor-pointer"
-                  onMouseEnter={() => handleMouseEnter(3)}
-                  onMouseLeave={() => handleMouseLeave(3)}
-                >
-                  Oceania:{" "}
-                  <CustomHoverCard
-                    triggerText={
-                      medalsByContinent?.OCE?.gold +
+                      medalsByContinent?.ASI?.bronze) /
+                    7
+                  }px`,
+                }}
+                ref={(el) => (ringRefs.current[1] = el)}
+              ></div>
+              {/* Black ring */}
+              <div
+                className="ring ring-0 absolute w-1/4 h-1/4 border-gray-950 rounded-full top-0 left-24 z-30"
+                style={{
+                  borderWidth: `${
+                    (medalsByContinent?.AFR?.gold +
+                      medalsByContinent?.AFR?.silver +
+                      medalsByContinent?.AFR?.bronze) /
+                    3
+                  }px`,
+                }}
+                ref={(el) => (ringRefs.current[2] = el)}
+              ></div>
+              {/* Green ring */}
+              <div
+                className="ring ring-0 absolute w-1/4 h-1/4 border-green-500 rounded-full top-7 left-36 z-40"
+                style={{
+                  borderWidth: `${
+                    (medalsByContinent?.OCE?.gold +
                       medalsByContinent?.OCE?.silver +
-                      medalsByContinent?.OCE?.bronze
-                    }
-                    countries={topCountriesByContinent?.OCE}
-                  />
-                </p>
-                <p>
-                  <span className="text-yellow-500">🥇</span>{" "}
-                  <CountUp end={medalsByContinent?.OCE?.gold} duration={2.75} />{" "}
-                  <span className="text-gray-500">🥈</span>{" "}
-                  <CountUp
-                    end={medalsByContinent?.OCE?.silver}
-                    duration={2.75}
-                  />{" "}
-                  <span className="text-yellow-900">🥉</span>{" "}
-                  <CountUp
-                    end={medalsByContinent?.OCE?.bronze}
-                    duration={2.75}
-                  />{" "}
-                </p>
+                      medalsByContinent?.OCE?.bronze) /
+                    7
+                  }px`,
+                }}
+                ref={(el) => (ringRefs.current[3] = el)}
+              ></div>
+              {/* Red ring */}
+              <div
+                className="ring ring-0 absolute w-1/4 h-1/4 border-red-600 rounded-full top-0 left-44 z-50"
+                style={{
+                  borderWidth: `${
+                    (medalsByContinent?.AME?.gold +
+                      medalsByContinent?.AME?.silver +
+                      medalsByContinent?.AME?.bronze) /
+                    7
+                  }px`,
+                }}
+                ref={(el) => (ringRefs.current[4] = el)}
+              ></div>
+              {/* stats2 */}
+              <div className="absolute top-[36%] right-[25%] left-[20%] flex justify-between w-[50%] stats2 z-50 ">
+                {/* Asia */}
+                <div className="text-center">
+                  <p
+                    className="text-yellow-700 text-xl font-bold cursor-pointer"
+                    onMouseEnter={() => handleMouseEnter(1)}
+                    onMouseLeave={() => handleMouseLeave(1)}
+                  >
+                    Asia:{" "}
+                    <CustomHoverCard
+                      triggerText={
+                        medalsByContinent?.ASI?.gold +
+                        medalsByContinent?.ASI?.silver +
+                        medalsByContinent?.ASI?.bronze
+                      }
+                      countries={topCountriesByContinent?.ASI}
+                    />
+                  </p>
+                  <p>
+                    <span className="text-yellow-500">🥇</span>{" "}
+                    <CountUp
+                      end={medalsByContinent?.ASI?.gold}
+                      duration={2.75}
+                    />{" "}
+                    <span className="text-gray-500">🥈</span>{" "}
+                    <CountUp
+                      end={medalsByContinent?.ASI?.silver}
+                      duration={2.75}
+                    />{" "}
+                    <span className="text-yellow-900">🥉</span>{" "}
+                    <CountUp
+                      end={medalsByContinent?.ASI?.bronze}
+                      duration={2.75}
+                    />{" "}
+                  </p>
+                </div>
+                {/* Oceania */}
+                <div className="text-center">
+                  <p
+                    className="text-green-700 text-xl font-bold cursor-pointer"
+                    onMouseEnter={() => handleMouseEnter(3)}
+                    onMouseLeave={() => handleMouseLeave(3)}
+                  >
+                    Oceania:{" "}
+                    <CustomHoverCard
+                      triggerText={
+                        medalsByContinent?.OCE?.gold +
+                        medalsByContinent?.OCE?.silver +
+                        medalsByContinent?.OCE?.bronze
+                      }
+                      countries={topCountriesByContinent?.OCE}
+                    />
+                  </p>
+                  <p>
+                    <span className="text-yellow-500">🥇</span>{" "}
+                    <CountUp
+                      end={medalsByContinent?.OCE?.gold}
+                      duration={2.75}
+                    />{" "}
+                    <span className="text-gray-500">🥈</span>{" "}
+                    <CountUp
+                      end={medalsByContinent?.OCE?.silver}
+                      duration={2.75}
+                    />{" "}
+                    <span className="text-yellow-900">🥉</span>{" "}
+                    <CountUp
+                      end={medalsByContinent?.OCE?.bronze}
+                      duration={2.75}
+                    />{" "}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          </>
+        )}
+      </div>
     </div>
   );
 }

@@ -60,7 +60,11 @@ Cette application utilise l'API publique de [Codante](https://apis.codante.io) p
 ### Notes de Développement
 
 - **Responsive Design** : J'ai rencontré des difficultés pour rendre l'application entièrement responsive. Des ajustements supplémentaires peuvent être nécessaires pour une meilleure compatibilité avec tous les appareils.
-- Cela m'a pris environ 4 heures pour le faire.
+- Cela m'a pris environ 6 heures pour le faire.
+
+## Easter Egg
+
+En hommage aux athlètes sénégalais Cheikh Tidiane Diouf (1/2 finale 400m hommes) et L.F. Mendy (1/2 finale 110m haies hommes), un emoji athlète 🏃🏾 est caché dans l'application.
 
 ## Lien du Projet
 
