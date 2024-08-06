@@ -116,6 +116,8 @@ const handleMouseLeave = (index) => {
     const stats = document.querySelectorAll(".stats");
     const stats2 = document.querySelectorAll(".stats2");
     const logojo = document.querySelector(".logojo");
+    const dedicace = document.querySelector(".dedicace");
+
 
     // Animation for rings
     gsap.from(rings, {
@@ -192,6 +194,21 @@ const handleMouseLeave = (index) => {
       duration: 0.5,
       delay: 7,
     });
+
+    // dedicace
+    gsap.from(dedicace, {
+      x: 10,
+      opacity: 0,
+      duration: 0.5,
+      delay: 7.5,
+    });
+    gsap.to(dedicace, {
+      x: 0,
+      opacity: 1,
+      duration: 0.5,
+      delay: 8,
+    });
+    
   }, [data]);
 
     // console.log(data)
@@ -225,7 +242,7 @@ const handleMouseLeave = (index) => {
           />
         </div>
         {/* team senegal et dedicace */}
-        <div className="absolute top-[55%] right-2 h-6 cursor-pointer  ">
+        <div className="absolute top-[55%] right-2 h-6 cursor-pointer dedicace  ">
           <a
             href="https://papabndev.netlify.app/"
             target="_blank"
@@ -352,6 +369,7 @@ const handleMouseLeave = (index) => {
                 </p>
               </div>
             </div>
+            {/* rings div */}
             {/* rings div */}
             <div className="relative left-10 w-[80%] max-w-4xl aspect-square mt-10 mx-auto ">
               {/* Blue ring */}
